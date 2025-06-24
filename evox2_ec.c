@@ -219,7 +219,7 @@ static ssize_t fan_level_store(struct device *dev,
     struct ec_fan *fan = dev_get_drvdata(dev);
     u8 val;
 
-    if (!kstrtou8(buf, 10, &val))
+    if (kstrtou8(buf, 10, &val))
         return -EINVAL;
 
     write_fan_level(fan, val);

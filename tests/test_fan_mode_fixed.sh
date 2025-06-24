@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-class_path=/sys/class/evox2_ec
+class_path=/sys/class/ec_su_axb35
 declare -a fan1_rpms fan2_rpms fan3_rpms
 declare -a original_modes original_levels
 

@@ -1,6 +1,6 @@
-# Makefile for evo-x2_ec
+# Makefile for ec_su_axb35
 
-obj-m += evox2_ec.o
+obj-m += ec_su_axb35.o
 
 KERNEL_BUILD ?= /lib/modules/$(shell uname -r)/build
 

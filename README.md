@@ -1,23 +1,27 @@
-# evox2-ec-linux
-Linux driver (prototype) for the GMKtec EVO-X2 embedded controller
+# ec-su_axb35-linux
+Linux driver (prototype) for embedded controller in the Sixunited AXB35-05 board.
+
+Vendors using that board:
+  - GMKTec EVO-X2
 
 # Build instructions
 ```
 $ make
-$ sudo insmod evox2-ec.ko
+$ sudo insmod ec_su_axb35.ko
 ```
 
 # Devices
 ```
 # Fan devices
-/sys/class/evox2_ec/fan1/ <-- CPU fan 1
-/sys/class/evox2_ec/fan2/ <-- CPU fan 2
-/sys/class/evox2_ec/fan3/ <-- System fan
+/sys/class/ec_su_axb35/fan1/ <-- CPU fan 1
+/sys/class/ec_su_axb35/fan2/ <-- CPU fan 2
+/sys/class/ec_su_axb35/fan3/ <-- System fan
 
 ../fanX/speed <-- current speed in rpm
 ../fanX/mode <-- fan-mode (auto/manual) - writable
 ../fanX/manual_speed <-- fixed speed in manual from 0 - 5 = 0 to 100% in 20% steps
 
 # Temp device
-/sys/class/evox2_ec/temp/temp <-- temperature in C
+/sys/class/ec_su_axb35/temp/temp <-- temperature in C
 ```
+

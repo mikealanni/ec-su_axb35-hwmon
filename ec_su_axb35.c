@@ -1,4 +1,4 @@
-// evox2_ec.c
+// ec_su_axb35.c
 
 #include <linux/module.h>
 #include <linux/kernel.h>
@@ -381,35 +381,35 @@ static void ec_update_worker(struct work_struct *work)
     schedule_delayed_work(&ec_update_work, msecs_to_jiffies(1000)); // every 1 sec
 }
 
-static dev_t evox2_ec_dev;
+static dev_t ec_su_axb35_dev;
 static struct class *ec_class;
 
-static int __init evox2_ec_init(void)
+static int __init ec_su_axb35_init(void)
 {
     int i;
     int ret;
 
-    ret = alloc_chrdev_region(&evox2_ec_dev, 0, ARRAY_SIZE(ec_fans) + 1, "evox2_ec");
+    ret = alloc_chrdev_region(&ec_su_axb35_dev, 0, ARRAY_SIZE(ec_fans) + 1, "ec_su_axb35");
     if (ret <0) {
-        pr_err("evox2_ec: Failed to allocation major number\n");
+        pr_err("ec_su_axb35: Failed to allocation major number\n");
         return ret;
     }
 
     #if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 4, 0)
-        ec_class = class_create("evox2_ec");
+        ec_class = class_create("ec_su_axb35");
     #else
-        ec_class = class_create(THIS_MODULE, "evox2_ec");
+        ec_class = class_create(THIS_MODULE, "ec_su_axb35");
     #endif
 
     if (IS_ERR(ec_class)) {
-        unregister_chrdev_region(evox2_ec_dev, ARRAY_SIZE(ec_fans) + 1);
+        unregister_chrdev_region(ec_su_axb35_dev, ARRAY_SIZE(ec_fans) + 1);
         return PTR_ERR(ec_class);
     }
 
     for (i = 0; i < ARRAY_SIZE(ec_fans); i++) {
         struct ec_fan *fan = &ec_fans[i];
 
-        fan->dev = device_create(ec_class, NULL, MKDEV(MAJOR(evox2_ec_dev), i), fan, fan->name);
+        fan->dev = device_create(ec_class, NULL, MKDEV(MAJOR(ec_su_axb35_dev), i), fan, fan->name);
         if (IS_ERR(fan->dev))
             continue;
 
@@ -422,7 +422,7 @@ static int __init evox2_ec_init(void)
         update_fan_mode(fan);
     }
 
-    ec_temp.dev = device_create(ec_class, NULL, MKDEV(MAJOR(evox2_ec_dev), ARRAY_SIZE(ec_fans)), &ec_temp, ec_temp.name);
+    ec_temp.dev = device_create(ec_class, NULL, MKDEV(MAJOR(ec_su_axb35_dev), ARRAY_SIZE(ec_fans)), &ec_temp, ec_temp.name);
     if (!IS_ERR(ec_temp.dev)) {
         dev_set_drvdata(ec_temp.dev, &ec_temp);
         device_create_file(ec_temp.dev, &dev_attr_temp_cur);
@@ -433,11 +433,11 @@ static int __init evox2_ec_init(void)
     INIT_DELAYED_WORK(&ec_update_work, ec_update_worker);
     schedule_delayed_work(&ec_update_work, msecs_to_jiffies(1000));
 
-    pr_info("evox2_ec: GMKTec EVO-X2 EC driver loaded\n");
+    pr_info("ec_su_axb35: Sixunited AXB35-02 EC driver loaded\n");
     return 0;
 }
 
-static void __exit evox2_ec_exit(void)
+static void __exit ec_su_axb35_exit(void)
 {
     int i;
     for (i = 0; i < ARRAY_SIZE(ec_fans); i++) {
@@ -447,7 +447,7 @@ static void __exit evox2_ec_exit(void)
             device_remove_file(ec_fans[i].dev, &dev_attr_fan_level);
             device_remove_file(ec_fans[i].dev, &dev_attr_fan_rampup_curve);
             device_remove_file(ec_fans[i].dev, &dev_attr_fan_rampdown_curve);
-            device_destroy(ec_class, MKDEV(MAJOR(evox2_ec_dev), i));
+            device_destroy(ec_class, MKDEV(MAJOR(ec_su_axb35_dev), i));
         }
     }
 
@@ -455,19 +455,19 @@ static void __exit evox2_ec_exit(void)
         device_remove_file(ec_temp.dev, &dev_attr_temp_cur);
         device_remove_file(ec_temp.dev, &dev_attr_temp_min);
         device_remove_file(ec_temp.dev, &dev_attr_temp_max);
-        device_destroy(ec_class, MKDEV(MAJOR(evox2_ec_dev), ARRAY_SIZE(ec_fans)));
+        device_destroy(ec_class, MKDEV(MAJOR(ec_su_axb35_dev), ARRAY_SIZE(ec_fans)));
     }
 
     cancel_delayed_work_sync(&ec_update_work);
 
     class_destroy(ec_class);
-    unregister_chrdev_region(evox2_ec_dev, ARRAY_SIZE(ec_fans) + 1);
-    pr_info("evox2_ec: Modul unloaded\n");
+    unregister_chrdev_region(ec_su_axb35_dev, ARRAY_SIZE(ec_fans) + 1);
+    pr_info("ec_su_axb35: Modul unloaded\n");
 }
 
-module_init(evox2_ec_init);
-module_exit(evox2_ec_exit);
+module_init(ec_su_axb35_init);
+module_exit(ec_su_axb35_exit);
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("loom@mopper.de");
-MODULE_DESCRIPTION("GMKtec EVO-x2 Embedded Controller Driver");
+MODULE_DESCRIPTION("Sixunited AXB35-02 Embedded Controller driver");

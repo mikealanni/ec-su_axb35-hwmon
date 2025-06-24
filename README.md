@@ -1,5 +1,5 @@
 # ec-su_axb35-linux
-Linux driver (prototype) for embedded controller in the Sixunited AXB35-05 board.
+Linux driver (prototype) for embedded controller in the Sixunited AXB35-02 board.
 
 Vendors using that board:
   - GMKTec EVO-X2

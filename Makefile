@@ -3,6 +3,7 @@
 KERNEL_BUILD ?= /lib/modules/$(shell uname -r)/build
 MODULE_NAME := ec_su_axb35.ko
 MODULE_INSTALLED_PATH := $(shell modinfo -n $(basename $(MODULE_NAME)) 2>/dev/null)
+PWD := $(CURDIR)
 
 .PHONY: default
 default: modules

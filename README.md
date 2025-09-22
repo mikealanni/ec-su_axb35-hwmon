@@ -2,7 +2,15 @@
 Linux driver for the embedded controller on the Sixunited AXB35-02 board.
 
 Vendors using that board:
-  - GMKTec EVO-X2
+  - GMKtec EVO-X2
+  - Bosgame M5
+  - FEVM FA-EX9
+  - Peladn YO1
+  - NIMO AI MiniPC
+
+An update to date list can be found [here](https://strixhalo-homelab.d7.wtf/Hardware/Boards/Sixunited-AXB35)
+
+For more details, please have a look at the dsevens wiki: https://strixhalo-homelab.d7.wtf/Guides/Power-Mode-and-Fan-Control
 
 # Build instructions
 ```

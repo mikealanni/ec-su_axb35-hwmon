@@ -10,7 +10,7 @@ Vendors using that board:
 
 An update to date list can be found [here](https://strixhalo-homelab.d7.wtf/Hardware/Boards/Sixunited-AXB35)
 
-For more details, please have a look at the dsevens wiki: https://strixhalo-homelab.d7.wtf/Guides/Power-Mode-and-Fan-Control
+For more details, please have a look at the desevens wiki: https://strixhalo-homelab.d7.wtf/Guides/Power-Mode-and-Fan-Control
 
 # Build instructions
 ```
